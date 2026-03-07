@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scroll globally */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base styles */
+body {
+  @apply bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 antialiased;
+}
+
+/* Selection */
+::selection {
+  @apply bg-emerald-500/30 text-emerald-950 dark:text-white;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-emerald-500;
+}
