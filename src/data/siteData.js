@@ -60,7 +60,7 @@ export const projects = [
     tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'Bcrypt', 'Cloudinary', 'PayPal'],
     github: 'https://github.com/ADITY-AKUMAR/Cart-Bazzar',
     live: null,
-    image: null,
+    image: '/cart-bazzar-logo.png',
   },
   {
     id: 2,
@@ -70,7 +70,7 @@ export const projects = [
     tech: ['React (Vite)', 'Node.js', 'Express.js', 'MongoDB', 'Socket.IO', 'Tailwind CSS', 'DaisyUI', 'Cloudinary'],
     github: 'https://github.com/ADITY-AKUMAR/ChatBot',
     live: null,
-    image: null,
+    image: '/realtime-chat-ui.png',
   },
   {
     id: 3,
@@ -80,31 +80,59 @@ export const projects = [
     tech: ['Power BI', 'Excel', 'MySQL', 'SQL'],
     github: 'https://github.com/ADITY-AKUMAR/OLA',
     live: null,
-    image: null,
+    image: '/ola-data-analysis.png',
+  },
+  {
+    id: 4,
+    title: 'EliteKicks E-commerce UI Design',
+    description:
+      'High-end sneaker e-commerce homepage and product listing UI built in Figma. Focused on bold hero visuals, clean product grids, and conversion-focused CTAs for modern footwear brands.',
+    tech: ['Figma', 'UI/UX', 'Design Systems'],
+    github: 'https://github.com/ADITY-AKUMAR/EliteKicksE-commerceUIDesign',
+    live: 'https://www.figma.com/proto/BU8rAwFnw9VmJrW1J278bm/Untitled?node-id=31-2&p=f&t=niAau86fREBqYqca-1&scaling=min-zoom&content-scaling=fixed&page-id=13%3A8&starting-point-node-id=31%3A2',
+    image: '/elitekicks-hero.png',
+  },
+  {
+    id: 5,
+    title: 'Blinkit Outlet Performance Dashboard',
+    description:
+      'Interactive Power BI dashboard analyzing Blinkit outlet performance across locations, item types, and outlet types for actionable business insights.',
+    tech: ['Power BI', 'Excel'],
+    github: 'https://github.com/ADITY-AKUMAR/BLINKIT',
+    live: null,
+    image: '/blinkit-dashboard.png',
+  },
+  {
+    id: 6,
+    title: 'Financial Loan Analytics Dashboard',
+    description:
+      'Financial loan analytics dashboard tracking applications, funded amount, received amount, and risk metrics. Built with SQL and Excel, visualized in Power BI.',
+    tech: ['Power BI', 'SQL', 'Excel'],
+    github: 'https://github.com/ADITY-AKUMAR/FINANCIAL_LOAN',
+    live: null,
+    image: '/financial-loan-dashboard.png',
   },
 ];
 
-/** Case studies - kept existing portfolio placeholders; update Figma links when ready */
+/** Case studies - detailed UI/UX write-ups with Figma design + prototype */
 export const caseStudies = [
   {
     id: 1,
-    title: 'E-commerce UX Redesign',
-    problem: 'High cart abandonment and confusing checkout flow.',
-    research: 'User interviews and heatmaps to identify friction points.',
-    wireframe: 'Low and high-fidelity wireframes in Figma.',
-    solution: 'Simplified checkout, one-click guest checkout, and clearer CTAs.',
-    result: 'Improved conversion and lower bounce rate.',
-    figmaUrl: 'https://figma.com',
-  },
-  {
-    id: 2,
-    title: 'Dashboard Usability Study',
-    problem: 'Users struggled to find key metrics quickly.',
-    research: 'Task-based usability testing with 5 participants.',
-    wireframe: 'Information architecture and wireframe iterations.',
-    solution: 'Reorganized navigation and added customizable widgets.',
-    result: 'Faster task completion and higher satisfaction scores.',
-    figmaUrl: 'https://figma.com',
+    title: 'EliteKicks E-commerce UI Design',
+    problem:
+      'Sneaker brand needed a modern, conversion-focused storefront that showcases hero products and makes browsing collections effortless.',
+    research:
+      'Analyzed top e-commerce shoe brands, studied UX patterns for product discovery, and collected feedback from sneaker buyers on pain points.',
+    wireframe:
+      'Created responsive wireframes in Figma for hero, popular products, best collection, latest products, and newsletter/footer sections.',
+    solution:
+      'Designed a bold, card-based layout with clear hierarchy, strong CTAs, and consistent visual language across homepage and product listing.',
+    result:
+      'Improved clarity of product information, smoother browsing experience, and a polished UI ready to be handed off for development.',
+    figmaDesignUrl:
+      'https://www.figma.com/design/BU8rAwFnw9VmJrW1J278bm/Untitled?node-id=31-2&t=sIyCRwiWwtjj0H1D-1',
+    figmaPrototypeUrl:
+      'https://www.figma.com/proto/BU8rAwFnw9VmJrW1J278bm/Untitled?node-id=31-2&p=f&t=niAau86fREBqYqca-1&scaling=min-zoom&content-scaling=fixed&page-id=13%3A8&starting-point-node-id=31%3A2',
   },
 ];
 

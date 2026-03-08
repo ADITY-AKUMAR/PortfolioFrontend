@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { caseStudies } from '../data/siteData';
 
 /**
- * Case Studies section - UI/UX cards with Problem, Research, Wireframe, Solution, Result + Figma link
+ * Case Studies section - UI/UX cards with Problem, Research, Wireframe, Solution, Result + Figma design + prototype links
  */
 export default function CaseStudies() {
   return (
@@ -52,15 +52,30 @@ export default function CaseStudies() {
                 </div>
               </dl>
 
-              <a
-                href={study.figmaUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-2 rounded-lg bg-zinc-800 dark:bg-zinc-700 text-white px-4 py-2 text-sm font-medium hover:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors"
-              >
-                <FigmaIcon className="w-4 h-4" />
-                Figma Prototype
-              </a>
+              <div className="mt-4 flex flex-wrap gap-3">
+                {study.figmaDesignUrl && (
+                  <a
+                    href={study.figmaDesignUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-zinc-800 dark:bg-zinc-700 text-white px-4 py-2 text-sm font-medium hover:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors"
+                  >
+                    <FigmaIcon className="w-4 h-4" />
+                    Figma Design
+                  </a>
+                )}
+                {study.figmaPrototypeUrl && (
+                  <a
+                    href={study.figmaPrototypeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-lg bg-zinc-50 dark:bg-zinc-900 text-zinc-900 dark:text-white px-4 py-2 text-sm font-medium border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                  >
+                    <FigmaIcon className="w-4 h-4" />
+                    Prototype
+                  </a>
+                )}
+              </div>
             </motion.article>
           ))}
         </div>
