@@ -34,7 +34,7 @@ export const navLinks = [
 ];
 
 export const stats = [
-  { value: '3+', label: 'Projects completed' },
+  { value: '7+', label: 'Projects completed' },
   { value: '15+', label: 'Technologies used' },
   { value: 'Ready', label: 'Internship ready' },
 ];
@@ -112,6 +112,16 @@ export const projects = [
     live: null,
     image: '/financial-loan-dashboard.png',
   },
+  {
+    id: 7,
+    title: 'BuyBestCakes UI/UX Design',
+    description:
+      'End-to-end bakery storefront UI crafted in Figma with emphasis on product discovery, quick ordering flow, and trust-building visual hierarchy for first-time buyers.',
+    tech: ['Figma', 'UI/UX', 'Wireframing', 'Prototyping'],
+    github: 'https://github.com/ADITY-AKUMAR/BuyBestCakes',
+    live: 'https://www.figma.com/proto/Mv8bKFfhnCm7V3CYWsOGQC/Untitled?page-id=0%3A1&node-id=10-218&p=f&viewport=435%2C160%2C0.1&t=oNoIFyfbtvC0w7HV-1&scaling=scale-down&content-scaling=fixed',
+    image: '/buybestcakes-hero.png',
+  },
 ];
 
 /** Case studies - detailed UI/UX write-ups with Figma design + prototype */
@@ -133,6 +143,24 @@ export const caseStudies = [
       'https://www.figma.com/design/BU8rAwFnw9VmJrW1J278bm/Untitled?node-id=31-2&t=sIyCRwiWwtjj0H1D-1',
     figmaPrototypeUrl:
       'https://www.figma.com/proto/BU8rAwFnw9VmJrW1J278bm/Untitled?node-id=31-2&p=f&t=niAau86fREBqYqca-1&scaling=min-zoom&content-scaling=fixed&page-id=13%3A8&starting-point-node-id=31%3A2',
+  },
+  {
+    id: 2,
+    title: 'BuyBestCakes Bakery App UI Design',
+    problem:
+      'Users struggled to quickly find relevant cakes by occasion, flavor, and budget in existing bakery interfaces, leading to drop-offs before checkout.',
+    research:
+      'Reviewed popular bakery and food-ordering flows, compared card/list browsing patterns, and identified key trust triggers such as ratings, freshness cues, and delivery clarity.',
+    wireframe:
+      'Designed low-to-mid fidelity wireframes for landing, category browse, product detail, cart, and checkout paths with clear CTA placement and reduced interaction friction.',
+    solution:
+      'Built a clean, visual-first interface with category shortcuts, strong product cards, guided order flow, and consistent spacing/type scale to improve scannability across devices.',
+    result:
+      'The final prototype delivers a faster browse-to-cart journey, clearer purchase decisions, and a dev-ready UI direction for implementation.',
+    figmaDesignUrl:
+      'https://www.figma.com/design/Mv8bKFfhnCm7V3CYWsOGQC/Untitled?node-id=0-1',
+    figmaPrototypeUrl:
+      'https://www.figma.com/proto/Mv8bKFfhnCm7V3CYWsOGQC/Untitled?page-id=0%3A1&node-id=10-218&p=f&viewport=435%2C160%2C0.1&t=oNoIFyfbtvC0w7HV-1&scaling=scale-down&content-scaling=fixed',
   },
 ];
 
