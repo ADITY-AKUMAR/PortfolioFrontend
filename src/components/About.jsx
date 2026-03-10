@@ -35,7 +35,7 @@ export default function About() {
         >
           I'm a Computer Science student at <strong className="text-zinc-800 dark:text-zinc-200">{developer.college}</strong> (2022 – 2026), passionate about
           full-stack development and UI/UX design. I build scalable web applications with clean interfaces and real-world impact—from
-          e-commerce platforms with payments and admin panels to real-time chat apps and analytics dashboards. I'm focused on placements and SDE/UI-UX roles where I can ship quality products and grow as an engineer.
+          e-commerce platforms with payments and admin panels to real-time chat apps and analytics dashboards. I'm focused on SDE/UI-UX roles where I can ship quality products and grow as an engineer.
         </motion.p>
 
         <motion.div

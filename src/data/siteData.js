@@ -36,7 +36,7 @@ export const navLinks = [
 export const stats = [
   { value: '7+', label: 'Projects completed' },
   { value: '15+', label: 'Technologies used' },
-  { value: 'Ready', label: 'Internship ready' },
+  { value: 'Ready', label: 'Internship & Full Time ready' },
 ];
 
 export const skills = {
