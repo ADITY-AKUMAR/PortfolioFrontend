@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import { caseStudies } from '../data/siteData';
+import { motion } from "framer-motion";
+import { caseStudies } from "../data/siteData";
 
 /**
  * Case Studies section - UI/UX cards with Problem, Research, Wireframe, Solution, Result + Figma design + prototype links
@@ -27,28 +27,74 @@ export default function CaseStudies() {
               transition={{ delay: index * 0.1 }}
               className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 p-6 hover:shadow-lg hover:border-emerald-500/30 transition-all"
             >
-              <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-4">{study.title}</h3>
+              <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-4">
+                {study.title}
+              </h3>
 
               <dl className="space-y-3 text-sm">
                 <div>
-                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">Problem</dt>
-                  <dd className="text-zinc-700 dark:text-zinc-300">{study.problem}</dd>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Problem
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.problem}
+                  </dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">Research</dt>
-                  <dd className="text-zinc-700 dark:text-zinc-300">{study.research}</dd>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Research
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.research}
+                  </dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">Wireframe</dt>
-                  <dd className="text-zinc-700 dark:text-zinc-300">{study.wireframe}</dd>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    User Flow
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.userFlow}
+                  </dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">Solution</dt>
-                  <dd className="text-zinc-700 dark:text-zinc-300">{study.solution}</dd>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Wireframes
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.wireframes}
+                  </dd>
                 </div>
                 <div>
-                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">Result</dt>
-                  <dd className="text-zinc-700 dark:text-zinc-300">{study.result}</dd>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    High Fidelity UI
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.highFidelityUI}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Prototype
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.prototype}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Outcome
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.outcome}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-medium text-zinc-500 dark:text-zinc-400">
+                    Lessons Learned
+                  </dt>
+                  <dd className="text-zinc-700 dark:text-zinc-300">
+                    {study.lessonsLearned}
+                  </dd>
                 </div>
               </dl>
 

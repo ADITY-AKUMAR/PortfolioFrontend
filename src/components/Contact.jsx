@@ -1,58 +1,92 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { developer } from '../data/siteData';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { developer } from "../data/siteData";
 
-// Use VITE_API_URL from .env; empty string uses same-origin (Vite proxy in dev)
-const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+const rawApiUrl = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
+const API_URL = rawApiUrl.endsWith("/api") ? rawApiUrl : `${rawApiUrl}/api`;
 
 /**
- * Contact section - form (Name, Email, Message) connected to backend API + social icons
+ * Contact section - Backend contact form with validation, loading, and toast messaging
  */
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState(null); // 'loading' | 'success' | 'error'
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setErrorMsg("Please complete all fields before sending.");
+      setStatus("error");
+      return false;
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(form.email)) {
+      setErrorMsg("Please enter a valid email address.");
+      setStatus("error");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('loading');
-    setErrorMsg('');
+    setErrorMsg("");
+
+    if (!validateForm()) return;
+    setStatus("loading");
 
     try {
-      const res = await fetch(`${API_BASE}/api/contact`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+      const response = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+        }),
       });
-      const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) {
-        setStatus('error');
-        setErrorMsg(data.error || 'Something went wrong.');
-        return;
+      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(
+          result?.error || "Failed to send message. Please try again later.",
+        );
       }
-      setStatus('success');
-      setForm({ name: '', email: '', message: '' });
+
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
     } catch (err) {
-      setStatus('error');
-      setErrorMsg('Network error. Please try again.');
+      setStatus("error");
+      setErrorMsg(
+        err.message || "Failed to send message. Please try again later.",
+      );
     }
   };
 
   const socials = [
-    { name: 'GitHub', href: developer.social.github, icon: GitHubIcon },
-    { name: 'LinkedIn', href: developer.social.linkedin, icon: LinkedInIcon },
-    { name: 'Twitter', href: developer.social.twitter, icon: TwitterIcon },
-    { name: 'Figma', href: developer.social.figma, icon: FigmaIcon },
+    { name: "GitHub", href: developer.social.github, icon: GitHubIcon },
+    { name: "LinkedIn", href: developer.social.linkedin, icon: LinkedInIcon },
+    { name: "Email", href: `mailto:${developer.email}`, icon: MailIcon },
+    {
+      name: "Phone",
+      href: `tel:${developer.phone.replace(/\s/g, "")}`,
+      icon: PhoneIcon,
+    },
+    { name: "Resume", href: developer.resumeUrl, icon: DocumentIcon },
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 bg-zinc-50 dark:bg-zinc-900/50">
+    <section
+      id="contact"
+      className="py-20 px-4 sm:px-6 bg-zinc-50 dark:bg-zinc-900/50"
+    >
       <div className="mx-auto max-w-2xl">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -77,9 +111,23 @@ export default function Contact() {
             viewport={{ once: true }}
             className="text-zinc-500 dark:text-zinc-500 text-center mb-10 text-sm"
           >
-            {developer.phone && <a href={`tel:${developer.phone.replace(/\s/g, '')}`} className="hover:text-emerald-600 dark:hover:text-emerald-400">{developer.phone}</a>}
-            {developer.phone && developer.email && ' · '}
-            {developer.email && <a href={`mailto:${developer.email}`} className="hover:text-emerald-600 dark:hover:text-emerald-400">{developer.email}</a>}
+            {developer.phone && (
+              <a
+                href={`tel:${developer.phone.replace(/\s/g, "")}`}
+                className="hover:text-emerald-600 dark:hover:text-emerald-400"
+              >
+                {developer.phone}
+              </a>
+            )}
+            {developer.phone && developer.email && " · "}
+            {developer.email && (
+              <a
+                href={`mailto:${developer.email}`}
+                className="hover:text-emerald-600 dark:hover:text-emerald-400"
+              >
+                {developer.email}
+              </a>
+            )}
           </motion.p>
         )}
         {!developer.email && !developer.phone && <div className="mb-10" />}
@@ -92,7 +140,10 @@ export default function Contact() {
           className="space-y-4"
         >
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+            >
               Name
             </label>
             <input
@@ -107,7 +158,10 @@ export default function Contact() {
             />
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+            >
               Email
             </label>
             <input
@@ -122,7 +176,10 @@ export default function Contact() {
             />
           </div>
           <div>
-            <label htmlFor="message" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+            >
               Message
             </label>
             <textarea
@@ -137,17 +194,21 @@ export default function Contact() {
             />
           </div>
 
-          {status === 'success' && (
-            <p className="text-sm text-emerald-600 dark:text-emerald-400">Thank you! Your message has been received.</p>
+          {status === "success" && (
+            <p className="text-sm text-emerald-600 dark:text-emerald-400">
+              Thank you! Your message has been received.
+            </p>
           )}
-          {status === 'error' && <p className="text-sm text-red-600 dark:text-red-400">{errorMsg}</p>}
+          {status === "error" && (
+            <p className="text-sm text-red-600 dark:text-red-400">{errorMsg}</p>
+          )}
 
           <button
             type="submit"
-            disabled={status === 'loading'}
+            disabled={status === "loading"}
             className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-3 disabled:opacity-50 transition-colors"
           >
-            {status === 'loading' ? 'Sending...' : 'Send Message'}
+            {status === "loading" ? "Sending..." : "Send Message"}
           </button>
         </motion.form>
 
@@ -156,7 +217,7 @@ export default function Contact() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-10 flex justify-center gap-6"
+          className="mt-10 grid grid-cols-3 gap-4 sm:flex sm:justify-center"
         >
           {socials.map(({ name, href, icon: Icon }) => (
             <a
@@ -164,10 +225,11 @@ export default function Contact() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-500 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/70 px-4 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:border-emerald-500 dark:hover:border-emerald-400 hover:text-emerald-600 transition-colors"
               aria-label={name}
             >
-              <Icon className="w-6 h-6" />
+              <Icon className="w-5 h-5" />
+              {name}
             </a>
           ))}
         </motion.div>
@@ -179,7 +241,11 @@ export default function Contact() {
 function GitHubIcon({ className }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+      <path
+        fillRule="evenodd"
+        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+        clipRule="evenodd"
+      />
     </svg>
   );
 }
@@ -192,18 +258,34 @@ function LinkedInIcon({ className }) {
   );
 }
 
-function TwitterIcon({ className }) {
+function MailIcon({ className }) {
   return (
-    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M2.25 4.5A2.25 2.25 0 014.5 2.25h15a2.25 2.25 0 012.25 2.25v15a2.25 2.25 0 01-2.25 2.25h-15A2.25 2.25 0 012.25 19.5v-15zM4.5 5.81v12.69h15V5.81l-7.5 5.25-7.5-5.25zm7.5 6.24L19.5 6.75H4.5l7.5 5.3z" />
     </svg>
   );
 }
 
-function FigmaIcon({ className }) {
+function PhoneIcon({ className }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.354 3.02 3.019 3.02h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 1-3.019-3.019c0-1.665 1.355-3.019 3.019-3.019h3.117v3.019H8.148zm7.704 3.019c0 1.665-1.355 3.019-3.019 3.019h-3.117v-6.038h3.117c1.665 0 3.019 1.355 3.019 3.019zm-3.019-1.47a1.55 1.55 0 0 0 1.548-1.549 1.55 1.55 0 0 0-1.548-1.548h-1.569v3.097h1.569z" />
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M3.654 2.097a1.745 1.745 0 012.61-.163l2.65 2.65a1.745 1.745 0 01.163 2.608l-1.2 1.2a1.745 1.745 0 00-.532 1.47c.122.852.455 2.137 1.53 3.214 1.075 1.075 2.36 1.408 3.214 1.53a1.745 1.745 0 001.47-.532l1.2-1.2a1.745 1.745 0 012.608.163l2.65 2.65a1.745 1.745 0 01-.163 2.61l-2.2 2.2c-.66.66-1.654.859-2.523.476-2.373-.995-4.695-3.317-5.69-5.69-.383-.869-.184-1.864.476-2.523l2.2-2.2z" />
+    </svg>
+  );
+}
+
+function DocumentIcon({ className }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M6 2.25A2.25 2.25 0 003.75 4.5v15A2.25 2.25 0 006 21.75h12a2.25 2.25 0 002.25-2.25v-12A2.25 2.25 0 0018 4.5H9.75A2.25 2.25 0 017.5 2.25H6zM8.25 6.75h7.5v1.5h-7.5v-1.5zm0 4.5h7.5v1.5h-7.5v-1.5zm0 4.5h4.5v1.5h-4.5v-1.5z" />
+    </svg>
+  );
+}
+
+function GlobeIcon({ className }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 2.25a9.75 9.75 0 100 19.5 9.75 9.75 0 000-19.5zm7.5 9.75a7.5 7.5 0 01-1.5 4.688c-.41-1.24-1.14-2.521-2.206-3.503A11.94 11.94 0 0019.5 12zm-7.5-7.5a7.5 7.5 0 014.688 1.5 11.94 11.94 0 00-2.215 3.218A11.96 11.96 0 0012 4.5zm-4.688 1.5A7.5 7.5 0 0112 4.5c.601 0 1.187.07 1.75.203A11.96 11.96 0 009.354 8.22 11.94 11.94 0 007.5 6zm-1.5 6a7.5 7.5 0 011.5-4.688 11.94 11.94 0 012.206 3.503 11.96 11.96 0 00-1.5 1.185A11.96 11.96 0 006 12zm1.5 4.688c.41-1.24 1.14-2.521 2.206-3.503a11.96 11.96 0 001.5 1.185 11.96 11.96 0 00-2.206 3.503A7.5 7.5 0 017.5 16.688z" />
     </svg>
   );
 }
